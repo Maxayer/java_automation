@@ -19,11 +19,17 @@ public class TestLoginPage extends BasePage{
             By.xpath("//button[@class='btn btn-lg btn-primary btn-block']"));
     private static final PageElement WARNING_OF_INCORRECT_LOGIN_OR_PASSWORD = new PageElement("Warning of incorrect login or password",
             By.xpath("//div[text()=\"Username or password is incorrect.\"]"));
+    private static final PageElement SIGN_IN_DESCRIPTION = new PageElement("PLEASE SIGN IN",
+            By.xpath("//h2[@class='form-signin-heading']"));
 
     public TestLoginPage(WebDriver driver){
         super(driver);
     }
 
+    @Override
+    public boolean pageIsDisplayed() {
+        return isElementPresent(SIGN_IN_DESCRIPTION);
+    }
 
     public void open(){
         driver.get(PAGE_URL);
@@ -32,9 +38,11 @@ public class TestLoginPage extends BasePage{
     public void fillUserNameField(String login){
         enterText(USERNAME_FIELD, login);
     }
+
     public void fillPasswordField(String password){
         enterText(PASSWORD_FIELD, password);
     }
+
     public TestPatientListingPage clickSignInButton(){
         click(SIGN_IN_BUTTON);
         return new TestPatientListingPage(driver);
@@ -46,10 +54,5 @@ public class TestLoginPage extends BasePage{
         return driver.getCurrentUrl().equalsIgnoreCase(PAGE_URL);
     }
 
-    // is to be done
-    @Override
-    public boolean pageIsDisplayed() {
-        return false;
-    }
 
 }

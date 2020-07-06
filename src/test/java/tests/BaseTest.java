@@ -1,18 +1,15 @@
 package tests;
 
-import common.Config;
-import common.Utils;
 import common.driver.DriverFactory;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.*;
 import pages.*;
 import workflows.*;
 
-import java.lang.reflect.*;
-
 public class BaseTest {
 
-    protected LoginPage loginPage;
+    protected TestLoginPage testLoginPage;
     protected DashboardPage dashboardPage;
     protected UserPage userPage;
     protected AddNewUserPage addNewUserPage;
@@ -23,16 +20,22 @@ public class BaseTest {
     protected AddSeasonPage addSeasonPage;
     protected AddStopPage addStopPage;
     protected AddSignPage addSignPage;
+    protected TestPatientListingPage testPatientListingPage;
+    protected TestBilledInvoicesPage testBilledInvoicesPage;
+    protected TestMedicationRequestPage testMedicationRequestPage;
 
     public static WebDriver driver;
+    WebDriverWait wait;
 
-    @BeforeTest
+    @BeforeMethod
     @Parameters("browser")
     public void setupTestRun(@Optional("Chrome") String browserName) {
         driver = new DriverFactory(browserName).getDriver();
+        wait = new WebDriverWait(driver, 5);
         initPages();
     }
 
+    /*
     @BeforeMethod
     public void logout() {
         if (dashboardPage.isAlertPresent()) {
@@ -49,7 +52,9 @@ public class BaseTest {
         }
     }
 
-    @AfterTest
+     */
+
+    @AfterMethod
     public void turnDown() {
         if (driver != null) {
             driver.quit();
@@ -58,7 +63,7 @@ public class BaseTest {
     }
 
     private void initPages() {
-        loginPage = new LoginPage(driver);
+        testLoginPage = new TestLoginPage(driver);
         dashboardPage = new DashboardPage(driver);
         userPage = new UserPage(driver);
         addNewUserPage = new AddNewUserPage(driver);
@@ -69,5 +74,8 @@ public class BaseTest {
         addSeasonPage = new AddSeasonPage(driver);
         addStopPage = new AddStopPage(driver);
         addSignPage = new AddSignPage(driver);
+        testPatientListingPage = new TestPatientListingPage(driver);
+        testBilledInvoicesPage = new TestBilledInvoicesPage(driver);
+        testMedicationRequestPage = new TestMedicationRequestPage(driver);
     }
 }
