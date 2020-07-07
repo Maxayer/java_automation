@@ -1,16 +1,10 @@
 package tests.admin;
 
-import common.driver.DriverFactory;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.By;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import pages.TestBilledInvoicesPage;
 import pages.TestLoginPage;
-import pages.TestPatientListingPage;
 import tests.BaseTest;
 
 public class TestLoginTests extends BaseTest {
@@ -81,5 +75,48 @@ public class TestLoginTests extends BaseTest {
         testLoginPage.clickSignInButton();
         Assert.assertTrue(testLoginPage.pageIsDisplayed());
         Assert.assertTrue(testLoginPage.isWarningOfIncorrectLoginOrPasswordPresent());
+    }
+    @Test
+    public void addNewMedicineItemAsADoctor(){
+        String login = "hr.doctor@hospitalrun.io";
+        String password = "HRt3st12";
+
+        testLoginPage.open();
+
+        testLoginPage.fillUserNameField(login);
+        testLoginPage.fillPasswordField(password);
+        testLoginPage.clickSignInButton();
+        testPatientListingPage.pageIsDisplayed();
+        testPatientListingPage.clickInventoryDropDown();
+        testInventoryPage.clickItemButton();
+        testItemsPage.pageIsDisplayed();
+        testItemsPage.clickNewItemButton();
+
+        testNewItemPage.pageIsDisplayed();
+        testNewItemPage.fillNameField("AAAA");
+        testNewItemPage.chooseType("Medication");
+        testNewItemPage.chooseDistributionUnit("pill");
+        testNewItemPage.chooseUnit("pill");
+        testNewItemPage.fillQuantityField("100");
+        testNewItemPage.fillPurchaseCostField("100");
+        testNewItemPage.fillVendorField("Pharma");
+        testNewItemPage.clickAddButton();
+
+        popUpPages.clickOkButton();
+
+        testItemsPage.pageIsDisplayed();
+        testNewItemPage.clickItemsDropDown();
+
+        testItemsPage.pageIsDisplayed();
+
+        Assert.assertTrue(testItemsPage.getCommodityName(0).equals("AAAA"));
+
+
+
+
+
+
+
+
     }
 }

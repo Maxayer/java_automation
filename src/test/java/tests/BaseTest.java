@@ -23,9 +23,13 @@ public class BaseTest {
     protected TestPatientListingPage testPatientListingPage;
     protected TestBilledInvoicesPage testBilledInvoicesPage;
     protected TestMedicationRequestPage testMedicationRequestPage;
+    protected TestInventoryPage testInventoryPage;
+    protected TestItemsPage testItemsPage;
+    protected TestNewItemPage testNewItemPage;
+    protected PopUpPages popUpPages;
 
     public static WebDriver driver;
-    WebDriverWait wait;
+    public WebDriverWait wait;
 
     @BeforeMethod
     @Parameters("browser")
@@ -54,13 +58,26 @@ public class BaseTest {
 
      */
 
+    /*
     @AfterMethod
     public void turnDown() {
+
+        try{
+            Thread.sleep(3000);
+        }catch (InterruptedException e){
+            e.printStackTrace();
+        }
+
+
         if (driver != null) {
             driver.quit();
             driver = null;
         }
     }
+
+     */
+
+
 
     private void initPages() {
         testLoginPage = new TestLoginPage(driver);
@@ -77,5 +94,9 @@ public class BaseTest {
         testPatientListingPage = new TestPatientListingPage(driver);
         testBilledInvoicesPage = new TestBilledInvoicesPage(driver);
         testMedicationRequestPage = new TestMedicationRequestPage(driver);
+        testInventoryPage = new TestInventoryPage(driver);
+        testItemsPage = new TestItemsPage(driver);
+        testNewItemPage = new TestNewItemPage(driver);
+        popUpPages = new PopUpPages(driver);
     }
 }

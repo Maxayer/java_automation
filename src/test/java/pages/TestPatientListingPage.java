@@ -13,6 +13,8 @@ public class TestPatientListingPage extends BasePage{
             By.xpath("//span[@class='mega-octicon octicon-gear']"));
     private static final PageElement LOG_OUT_BUTTON = new PageElement("Log OUT",
             By.xpath("//a[@class='logout']"));
+    private static final PageElement INVENTORY_DROPDOWN = new PageElement("Inventory",
+            By.cssSelector("#ember716"));
 
     public TestPatientListingPage(WebDriver driver){
         super(driver);
@@ -27,19 +29,8 @@ public class TestPatientListingPage extends BasePage{
         click(MEGA_OCTICON);
         click(LOG_OUT_BUTTON);
     }
-
-
-    public boolean atPage() {
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        System.out.println();
-        System.out.println("================================");
-        System.out.println(driver.getCurrentUrl());
-        System.out.println("================================");
-        System.out.println();
-        return driver.getCurrentUrl().contains(PAGE_URL);
+    public void clickInventoryDropDown(){
+        click(INVENTORY_DROPDOWN);
     }
+
 }
