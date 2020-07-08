@@ -4,71 +4,72 @@ import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import pages.TestLoginPage;
+import pages.LoginPage;
 import tests.BaseTest;
+import common.Config;
 
 public class TestLoginTests extends BaseTest {
 
     @DataProvider(name = "loginRightDataProviderForHealthWorkers")
     public Object[][] getHealthWorkersCredentials(){
-        return new Object[][] {{"hr.doctor@hospitalrun.io", "HRt3st12"}, {"hr.nurse@hospitalrun.io", "HRt3st12"},
-                {"hr.nurse.manager@hospitalrun.io", "HRt3st12"}};
+        return new Object[][] {{Config.DOCTOR_NAME, Config.DOCTOR_PASS}, {Config.NURSE_NAME, Config.NURSE_PASS},
+                {Config.NURSE_MANAGER_NAME, Config.NURSE_MANAGER_PASS}};
     }
     @DataProvider(name = "loginRightDataProviderForAdminWorkers")
     public Object[][] getAdminWorkersCredentials(){
-        return new Object[][] {{"hr.hospital.admin@hospitalrun.io", "HRt3st12"},
-                {"hr.hospital.office@hospitalrun.io", "HRt3st12"}};
+        return new Object[][] {{Config.HOSPITAL_ADMINISTRATOR_NAME, Config.HOSPITAL_ADMINISTRATOR_PASS},
+                {Config.BUSINESS_OFFICE_NAME, Config.BUSINESS_OFFICE_PASS}};
     }
     @DataProvider(name = "loginRightDataProviderForSupportWorkers")
     public Object[][] getSupportWorkersCredentials(){
-        return new Object [][] {{"hr.pharmacist@hospitalrun.io", "HRt3st12"}};
+        return new Object [][] {{Config.PHARMACIST_NAME, Config.PHARMACIST_PASS}};
     }
     @DataProvider(name = "loginFalseDataProvider")
     public Object[][] getWrongCredentials(){
-        return new Object[][] {{"Katya", "147852"}};
+        return new Object[][] {{Config.WRONG_NAME, Config.WRONG_PASS}};
     }
 
     @Test(dataProvider = "loginRightDataProviderForHealthWorkers")
     public void logInAsHealthWorkerWithRightCredentials(String login, String password){
-        testLoginPage.open();
+        loginPage.open();
 
-        testLoginPage.fillUserNameField(login);
-        testLoginPage.fillPasswordField(password);
-        testLoginPage.clickSignInButton();
+        loginPage.fillUserNameField(login);
+        loginPage.fillPasswordField(password);
+        loginPage.clickSignInButton();
         //wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//h1[text()=\"Patient Listing\"]")));
-        Assert.assertTrue(testPatientListingPage.pageIsDisplayed());
+        Assert.assertTrue(patientListingPage.pageIsDisplayed());
 
-        testPatientListingPage.logOut();
-        Assert.assertTrue(testLoginPage.pageIsDisplayed());
+        patientListingPage.logOut();
+        Assert.assertTrue(loginPage.pageIsDisplayed());
     }
 
     @Test(dataProvider = "loginRightDataProviderForAdminWorkers")
     public void logInAsAdminWorkerWithRightCredentials(String login, String password){
-        testLoginPage.open();
-        testLoginPage.fillUserNameField(login);
-        testLoginPage.fillPasswordField(password);
-        testLoginPage.clickSignInButton();
-        Assert.assertTrue(testBilledInvoicesPage.pageIsDisplayed());
+        loginPage.open();
+        loginPage.fillUserNameField(login);
+        loginPage.fillPasswordField(password);
+        loginPage.clickSignInButton();
+        Assert.assertTrue(billedInvoicesPage.pageIsDisplayed());
 
-        testBilledInvoicesPage.logOut();
-        Assert.assertTrue(testBilledInvoicesPage.pageIsDisplayed());
+        billedInvoicesPage.logOut();
+        Assert.assertTrue(billedInvoicesPage.pageIsDisplayed());
 
     }
     @Test(dataProvider = "loginRightDataProviderForSupportWorkers")
     public void logInAsSupportWorkerWithRightCredentials(String login, String password){
-        testLoginPage.open();
-        testLoginPage.fillUserNameField(login);
-        testLoginPage.fillPasswordField(password);
-        testLoginPage.clickSignInButton();
-        Assert.assertTrue(testMedicationRequestPage.pageIsDisplayed());
+        loginPage.open();
+        loginPage.fillUserNameField(login);
+        loginPage.fillPasswordField(password);
+        loginPage.clickSignInButton();
+        Assert.assertTrue(medicationRequestPage.pageIsDisplayed());
 
-        testMedicationRequestPage.logOut();
-        Assert.assertTrue(testLoginPage.pageIsDisplayed());
+        medicationRequestPage.logOut();
+        Assert.assertTrue(loginPage.pageIsDisplayed());
     }
 
     @Test(dataProvider = "loginFalseDataProvider")
     public void logInWithWrongCredentials(String login, String password){
-        TestLoginPage testLoginPage = new TestLoginPage(driver);
+        LoginPage testLoginPage = new LoginPage(driver);
         testLoginPage.open();
         testLoginPage.fillUserNameField(login);
         testLoginPage.fillPasswordField(password);
@@ -77,46 +78,75 @@ public class TestLoginTests extends BaseTest {
         Assert.assertTrue(testLoginPage.isWarningOfIncorrectLoginOrPasswordPresent());
     }
     @Test
-    public void addNewMedicineItemAsADoctor(){
-        String login = "hr.doctor@hospitalrun.io";
-        String password = "HRt3st12";
+    public void addNewMedicineItemAsDoctor(){
 
-        testLoginPage.open();
+        loginPage.open();
+        loginPage.fillUserNameField(Config.DOCTOR_NAME);
+        loginPage.fillPasswordField(Config.DOCTOR_PASS);
+        loginPage.clickSignInButton();
+        Assert.assertTrue(patientListingPage.pageIsDisplayed());
 
-        testLoginPage.fillUserNameField(login);
-        testLoginPage.fillPasswordField(password);
-        testLoginPage.clickSignInButton();
-        testPatientListingPage.pageIsDisplayed();
-        testPatientListingPage.clickInventoryDropDown();
-        testInventoryPage.clickItemButton();
-        testItemsPage.pageIsDisplayed();
-        testItemsPage.clickNewItemButton();
 
-        testNewItemPage.pageIsDisplayed();
-        testNewItemPage.fillNameField("AAAA");
-        testNewItemPage.chooseType("Medication");
-        testNewItemPage.chooseDistributionUnit("pill");
-        testNewItemPage.chooseUnit("pill");
-        testNewItemPage.fillQuantityField("100");
-        testNewItemPage.fillPurchaseCostField("100");
-        testNewItemPage.fillVendorField("Pharma");
-        testNewItemPage.clickAddButton();
+        patientListingPage.clickInventoryDropDown();
+        inventoryPage.clickItemButton();
+        Assert.assertTrue(itemsPage.pageIsDisplayed());
+        itemsPage.clickNewItemButton();
+
+        Assert.assertTrue(newItemPage.pageIsDisplayed());
+        newItemPage.fillNameField("AAAA");
+        newItemPage.chooseType("Medication");
+        newItemPage.chooseDistributionUnit("pill");
+        newItemPage.chooseUnit("pill");
+        newItemPage.fillQuantityField("100");
+        newItemPage.fillPurchaseCostField("100");
+        newItemPage.fillVendorField("Pharma");
+        newItemPage.clickAddButton();
 
         popUpPages.clickOkButton();
 
-        testItemsPage.pageIsDisplayed();
-        testNewItemPage.clickItemsDropDown();
 
-        testItemsPage.pageIsDisplayed();
+        newItemPage.clickItemsDropDown();
+        Assert.assertTrue(itemsPage.pageIsDisplayed());
+        Assert.assertTrue(itemsPage.getCommodityName(0).equals("AAAA"));
+    }
 
-        Assert.assertTrue(testItemsPage.getCommodityName(0).equals("AAAA"));
+    @Test
+    public void addNewPatientAsDoctor(){
+        loginPage.open();
+        loginPage.fillUserNameField(Config.DOCTOR_NAME);
+        loginPage.fillPasswordField(Config.DOCTOR_PASS);
+        loginPage.clickSignInButton();
+        Assert.assertTrue(patientListingPage.pageIsDisplayed());
+        patientListingPage.clickNewPatientButton();
 
+        Assert.assertTrue(newPatientPage.pageIsDisplayed());
+        String firstName = "Erl";
+        String lastName = "Pie";
+        newPatientPage.fillFirstNameField(firstName);
+        newPatientPage.fillLastNameField(lastName);
+        newPatientPage.clickAddButton();
+        newPatientPage.clickPatientsDropDown();
 
+        Assert.assertTrue(patientListingPage.pageIsDisplayed());
+        patientListingPage.goToEndOfPatientsList();
+        String[] patientFullName = patientListingPage.getFullNameOfLastPatient();
+        Assert.assertTrue(firstName.equals(patientFullName[0]) && lastName.equals(patientFullName[1]));
+        patientListingPage.getLastPatient().findElement(By.xpath(".//button[text()='Edit']")).click();
 
+        String editedFirstName = "Carl";
+        String editedLastName = "Bread";
+        Assert.assertTrue(editPatientPage.pageIsDisplayed());
+        editPatientPage.clickGeneralButton();
+        editPatientPage.fillFirstNameField(editedFirstName);
+        editPatientPage.fillLastNameField(editedLastName);
+        editPatientPage.fillMiddleNameField("Jacob");
+        editPatientPage.clickUpdateButton();
+        editPatientPage.clickPatientsDropDown();
 
-
-
-
+        Assert.assertTrue(patientListingPage.pageIsDisplayed());
+        patientListingPage.goToEndOfPatientsList();
+        patientFullName = patientListingPage.getFullNameOfLastPatient();
+        Assert.assertTrue(editedFirstName.equals(patientFullName[0]) && editedLastName.equals(patientFullName[1]));
 
     }
 }

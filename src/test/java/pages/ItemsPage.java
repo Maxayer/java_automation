@@ -7,7 +7,7 @@ import org.openqa.selenium.WebElement;
 
 import java.util.List;
 
-public class TestItemsPage extends BasePage{
+public class ItemsPage extends BasePage{
 
     private static final PageElement H1 = new PageElement("Items",
             By.xpath("//h1[text()=\"Items\"]"), true);
@@ -15,7 +15,7 @@ public class TestItemsPage extends BasePage{
             By.xpath("//button[contains(text(),'+ new item')]"));
 
 
-    public TestItemsPage(WebDriver driver){
+    public ItemsPage(WebDriver driver){
         super(driver);
     }
 

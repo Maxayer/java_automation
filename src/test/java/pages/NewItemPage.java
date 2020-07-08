@@ -6,7 +6,7 @@ import org.openqa.selenium.WebDriver;
 
 import javax.print.DocFlavor;
 
-public class TestNewItemPage extends BasePage{
+public class NewItemPage extends BasePage{
     private static final PageElement H1 = new PageElement("New Item",
             By.xpath("//h1[text()=\"New Item\"]"));
     private static final PageElement NAME_FIELD = new PageElement("Name",
@@ -32,11 +32,11 @@ public class TestNewItemPage extends BasePage{
     private static final PageElement ADD_BUTTON = new PageElement("Add",
             By.xpath("//button[contains(@class, 'btn btn-primary on')]"));
     private static final PageElement ITEMS_DROP_DOWN = new PageElement("Items",
-            By.xpath("/html[1]/body[1]/div[1]/nav[1]/div[1]/div[2]/div[1]/div[2]/div[2]/a[1]"));
+            By.xpath("//div[@class='category-sub-items']//a[@href='#/inventory/listing']"));
 
 
 
-    public TestNewItemPage(WebDriver driver){
+    public NewItemPage(WebDriver driver){
         super(driver);
     }
 

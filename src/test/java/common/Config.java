@@ -88,4 +88,21 @@ public class Config {
     public static String EDITED_DEVICE_ID = "";
     public static String EDITED_DEVICE_BUS = "";
     public static String EDITED_DEVICE_NOTE = "";
+
+    public static final String DOCTOR_NAME = "hr.doctor@hospitalrun.io";
+    public static final String DOCTOR_PASS = "HRt3st12";
+    public static final String NURSE_NAME = "hr.nurse@hospitalrun.io";
+    public static final String NURSE_PASS = "HRt3st12";
+    public static final String NURSE_MANAGER_NAME = "hr.nurse.manager@hospitalrun.io";
+    public static final String NURSE_MANAGER_PASS = "HRt3st12";
+    public static final String HOSPITAL_ADMINISTRATOR_NAME = "hr.hospital.admin@hospitalrun.io";
+    public static final String HOSPITAL_ADMINISTRATOR_PASS = "HRt3st12";
+    public static final String BUSINESS_OFFICE_NAME = "hr.hospital.office@hospitalrun.io";
+    public static final String BUSINESS_OFFICE_PASS = "HRt3st12";
+    public static final String PHARMACIST_NAME = "hr.pharmacist@hospitalrun.io";
+    public static final String PHARMACIST_PASS = "HRt3st12";
+    public static final String WRONG_NAME = "Katya";
+    public static final String WRONG_PASS = "147852";
+
 }
+

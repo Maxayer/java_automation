@@ -5,7 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class TestBilledInvoicesPage extends BasePage{
+public class BilledInvoicesPage extends BasePage{
 
     private static final String PAGE_URL = "http://demo.hospitalrun.io/#/invoices";
     private static final PageElement H1 = new PageElement("Billed Invoices",
@@ -15,7 +15,7 @@ public class TestBilledInvoicesPage extends BasePage{
     private static final PageElement LOG_OUT_BUTTON = new PageElement("Log OUT",
             By.xpath("//a[@class='logout']"));
 
-    public TestBilledInvoicesPage(WebDriver driver){
+    public BilledInvoicesPage(WebDriver driver){
         super(driver);
     }
 

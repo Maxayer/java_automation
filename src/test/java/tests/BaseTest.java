@@ -1,5 +1,7 @@
 package tests;
 
+import common.Config;
+import common.Utils;
 import common.driver.DriverFactory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -9,7 +11,7 @@ import workflows.*;
 
 public class BaseTest {
 
-    protected TestLoginPage testLoginPage;
+    protected LoginPage loginPage;
     protected DashboardPage dashboardPage;
     protected UserPage userPage;
     protected AddNewUserPage addNewUserPage;
@@ -20,13 +22,15 @@ public class BaseTest {
     protected AddSeasonPage addSeasonPage;
     protected AddStopPage addStopPage;
     protected AddSignPage addSignPage;
-    protected TestPatientListingPage testPatientListingPage;
-    protected TestBilledInvoicesPage testBilledInvoicesPage;
-    protected TestMedicationRequestPage testMedicationRequestPage;
-    protected TestInventoryPage testInventoryPage;
-    protected TestItemsPage testItemsPage;
-    protected TestNewItemPage testNewItemPage;
+    protected PatientListingPage patientListingPage;
+    protected BilledInvoicesPage billedInvoicesPage;
+    protected MedicationRequestPage medicationRequestPage;
+    protected InventoryPage inventoryPage;
+    protected ItemsPage itemsPage;
+    protected NewItemPage newItemPage;
     protected PopUpPages popUpPages;
+    protected NewPatientPage newPatientPage;
+    protected EditPatientPage editPatientPage;
 
     public static WebDriver driver;
     public WebDriverWait wait;
@@ -39,8 +43,8 @@ public class BaseTest {
         initPages();
     }
 
-    /*
-    @BeforeMethod
+
+    @BeforeMethod(enabled = false)
     public void logout() {
         if (dashboardPage.isAlertPresent()) {
             dashboardPage.handleAlert();
@@ -56,10 +60,9 @@ public class BaseTest {
         }
     }
 
-     */
 
-    /*
-    @AfterMethod
+
+    @AfterMethod(enabled = false)
     public void turnDown() {
 
         try{
@@ -75,12 +78,11 @@ public class BaseTest {
         }
     }
 
-     */
 
 
 
     private void initPages() {
-        testLoginPage = new TestLoginPage(driver);
+        loginPage = new LoginPage(driver);
         dashboardPage = new DashboardPage(driver);
         userPage = new UserPage(driver);
         addNewUserPage = new AddNewUserPage(driver);
@@ -91,12 +93,14 @@ public class BaseTest {
         addSeasonPage = new AddSeasonPage(driver);
         addStopPage = new AddStopPage(driver);
         addSignPage = new AddSignPage(driver);
-        testPatientListingPage = new TestPatientListingPage(driver);
-        testBilledInvoicesPage = new TestBilledInvoicesPage(driver);
-        testMedicationRequestPage = new TestMedicationRequestPage(driver);
-        testInventoryPage = new TestInventoryPage(driver);
-        testItemsPage = new TestItemsPage(driver);
-        testNewItemPage = new TestNewItemPage(driver);
+        patientListingPage = new PatientListingPage(driver);
+        billedInvoicesPage = new BilledInvoicesPage(driver);
+        medicationRequestPage = new MedicationRequestPage(driver);
+        inventoryPage = new InventoryPage(driver);
+        itemsPage = new ItemsPage(driver);
+        newItemPage = new NewItemPage(driver);
         popUpPages = new PopUpPages(driver);
+        newPatientPage = new NewPatientPage(driver);
+        editPatientPage = new EditPatientPage(driver);
     }
 }
