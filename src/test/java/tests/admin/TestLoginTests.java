@@ -133,20 +133,66 @@ public class TestLoginTests extends BaseTest {
         Assert.assertTrue(firstName.equals(patientFullName[0]) && lastName.equals(patientFullName[1]));
         patientListingPage.getLastPatient().findElement(By.xpath(".//button[text()='Edit']")).click();
 
-        String editedFirstName = "Carl";
-        String editedLastName = "Bread";
+        firstName = "Carl";
+        lastName = "Bread";
+        String middleName = "Jacob";
         Assert.assertTrue(editPatientPage.pageIsDisplayed());
         editPatientPage.clickGeneralButton();
-        editPatientPage.fillFirstNameField(editedFirstName);
-        editPatientPage.fillLastNameField(editedLastName);
-        editPatientPage.fillMiddleNameField("Jacob");
+        editPatientPage.fillFirstNameField(firstName);
+        editPatientPage.fillLastNameField(lastName);
+        editPatientPage.fillMiddleNameField(middleName);
         editPatientPage.clickUpdateButton();
-        editPatientPage.clickPatientsDropDown();
 
+        editPatientPage.clickVisitsButton();
+        editPatientPage.clickNewVisitButton();
+
+        Assert.assertTrue(newVisitPage.pageIsDisplayed());
+        newVisitPage.clickAddBtn();
+
+        editPatientPage.clickPatientsDropDown();
         Assert.assertTrue(patientListingPage.pageIsDisplayed());
         patientListingPage.goToEndOfPatientsList();
         patientFullName = patientListingPage.getFullNameOfLastPatient();
-        Assert.assertTrue(editedFirstName.equals(patientFullName[0]) && editedLastName.equals(patientFullName[1]));
+        Assert.assertTrue(firstName.equals(patientFullName[0]) && lastName.equals(patientFullName[1]));
 
     }
+
+    // is to be done
+    @Test
+    public void addNewInvoiceAsDoctor() throws InterruptedException {
+        loginPage.open();
+        loginPage.fillUserNameField(Config.DOCTOR_NAME);
+        loginPage.fillPasswordField(Config.DOCTOR_PASS);
+        loginPage.clickSignInButton();
+        Assert.assertTrue(patientListingPage.pageIsDisplayed());
+
+        patientListingPage.clickBillingDropDown();
+        Assert.assertTrue(billedInvoicesPage.pageIsDisplayed());
+        billedInvoicesPage.clickNewInvoices();
+
+        Assert.assertTrue(newInvoicePage.pageIsDisplayed());
+
+        newInvoicePage.fillPatientFld("Carl Jacob Bread");
+        newInvoicePage.chooseVisit();
+
+        Thread.sleep(3000);
+
+        newInvoicePage.chooseVisit();
+
+        Thread.sleep(3000);
+
+        newInvoicePage.chooseVisit();
+
+        newInvoicePage.clickVisit();
+
+        newInvoicePage.clickInvoiceReadyBtn();
+        newInvoicePage.clickBillingDpd();
+
+        Assert.assertTrue(billedInvoicesPage.pageIsDisplayed());
+        billedInvoicesPage.refreshPage();
+
+
+    }
+
+
 }

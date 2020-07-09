@@ -6,20 +6,24 @@ import org.openqa.selenium.WebDriver;
 
 public class EditPatientPage extends BasePage{
 
-    private static final PageElement H1 = new PageElement("Edit Patient",
+    private static final PageElement h1 = new PageElement("Edit Patient H1",
             By.xpath("//h1[text()='Edit Patient']"), true);
-    private static final PageElement GENERAL_BUTTON = new PageElement("General",
+    private static final PageElement generalBtn = new PageElement("General Button",
             By.xpath("//a[@href='#general']"), true);
-    private static final PageElement FIRST_NAME_FIELD = new PageElement("First Name",
+    private static final PageElement firstNameFld = new PageElement("First Name Field",
             By.xpath("//label[text()='First Name']/following-sibling::div/input"), true);
-    private static final PageElement LAST_NAME_FIELD = new PageElement("Last Name",
+    private static final PageElement lastNameFld = new PageElement("Last Name Field",
             By.xpath("//label[text()='Last Name']/following-sibling::div/input"), true);
-    private static final PageElement MIDDLE_NAME_FIELD = new PageElement("Middle Name",
+    private static final PageElement middleNameFld = new PageElement("Middle Name Field",
             By.xpath("//label[text()='Middle Name']/following-sibling::div/input"), true);
-    private static final PageElement UPDATE_BUTTON = new PageElement("Update",
+    private static final PageElement updateBtn = new PageElement("Update Button",
             By.xpath("//div[@class= 'panel-footer']//button[text()='Update']"), true);
-    private static final PageElement PATIENTS_DROP_DOWN = new PageElement("Patients",
+    private static final PageElement patientsDpd = new PageElement("Patients Drop Down",
             By.xpath("//a[text()='Patients']"));
+    private static final PageElement visitsBtn = new PageElement("Visits Button",
+            By.xpath("//a[text()='Visits']"), true);
+    private static final PageElement newVisitBtn = new PageElement("New Visit Button",
+            By.xpath("//button[text()='New Visit']"));
 
     public EditPatientPage(WebDriver driver){
         super(driver);
@@ -31,26 +35,42 @@ public class EditPatientPage extends BasePage{
     }
 
     public void clickGeneralButton(){
-        click(GENERAL_BUTTON);
+        waitToBeVisible(generalBtn);
+        click(generalBtn);
     }
 
     public void fillFirstNameField(String firstName){
-        enterText(FIRST_NAME_FIELD, firstName);
+        waitToBeVisible(firstNameFld);
+        enterText(firstNameFld, firstName);
     }
 
     public void fillLastNameField(String lastName){
-        enterText(LAST_NAME_FIELD, lastName);
+        waitToBeVisible(lastNameFld);
+        enterText(lastNameFld, lastName);
     }
 
     public void fillMiddleNameField(String middleName){
-        enterText(MIDDLE_NAME_FIELD, middleName);
+        waitToBeVisible(middleNameFld);
+        enterText(middleNameFld, middleName);
     }
 
     public void clickUpdateButton(){
-        click(UPDATE_BUTTON);
+        waitToBeVisible(updateBtn);
+        click(updateBtn);
     }
 
     public void clickPatientsDropDown(){
-        click(PATIENTS_DROP_DOWN);
+        waitToBeVisible(patientsDpd);
+        click(patientsDpd);
+    }
+
+    public void clickVisitsButton(){
+        waitToBeVisible(visitsBtn);
+        click(visitsBtn);
+    }
+
+    public void clickNewVisitButton(){
+        waitToBeVisible(newVisitBtn);
+        click(newVisitBtn);
     }
 }

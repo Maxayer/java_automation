@@ -9,9 +9,9 @@ import java.util.List;
 
 public class ItemsPage extends BasePage{
 
-    private static final PageElement H1 = new PageElement("Items",
+    private static final PageElement h1 = new PageElement("Items H1",
             By.xpath("//h1[text()=\"Items\"]"), true);
-    private static final PageElement NEW_ITEM_BUTTON = new PageElement("+ new item",
+    private static final PageElement newItemBtn = new PageElement("New Item Button",
             By.xpath("//button[contains(text(),'+ new item')]"));
 
 
@@ -21,11 +21,12 @@ public class ItemsPage extends BasePage{
 
     @Override
     public boolean pageIsDisplayed() {
-        return isElementPresent(H1);
+        return isElementPresent(h1);
     }
 
     public void clickNewItemButton(){
-        click(NEW_ITEM_BUTTON);
+        waitToBeVisible(newItemBtn);
+        click(newItemBtn);
     }
 
     public List<WebElement> getListOfItems(){

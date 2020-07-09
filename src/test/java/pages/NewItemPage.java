@@ -4,34 +4,32 @@ import common.PageElement;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-import javax.print.DocFlavor;
-
 public class NewItemPage extends BasePage{
-    private static final PageElement H1 = new PageElement("New Item",
+    private static final PageElement h1 = new PageElement("New Item H1",
             By.xpath("//h1[text()=\"New Item\"]"));
-    private static final PageElement NAME_FIELD = new PageElement("Name",
+    private static final PageElement nameFld = new PageElement("Name Field",
             By.xpath("//input[contains(@id,'name-ember')]"));
-    private static final PageElement TYPE_DROP_DOWN = new PageElement("Type",
+    private static final PageElement typeDpd = new PageElement("Type Drop Down",
             By.xpath("//select[contains(@id,'inventoryType-ember')]"));
-    private static final PageElement TYPE_MEDICATION  = new PageElement("Type",
+    private static final PageElement typeMedication = new PageElement("Type Medication",
             By.xpath("//option[text()='Medication']"));
-    private static final PageElement DISTRIBUTION_UNIT_DROP_DOWN  = new PageElement("Distribution unit",
+    private static final PageElement distributionUnitDpd = new PageElement("Distribution Unit Drop Down",
             By.xpath("//select[contains(@id, 'distributionUnit-ember')]"));
-    private static final PageElement PILL_DISTRIBUTION_UNIT = new PageElement("Pill",
+    private static final PageElement pillDistributionUnit = new PageElement("Pill Distribution Unit",
             By.xpath("//select[contains(@id, 'distributionUnit-ember')]/option[@value=\"pill\"]"));
-    private static final PageElement UNIT_DROP_DOWN = new PageElement("Unit",
+    private static final PageElement unitDpd = new PageElement("Unit Drop Down",
             By.xpath("//select[contains(@id, 'ember') and @tabindex = '-1']"));
-    private static final PageElement PILL_UNIT = new PageElement("pill",
+    private static final PageElement pillUnit = new PageElement("Pill Unit",
             By.xpath("//select[contains(@id, 'ember') and @tabindex = '-1']/option[@value = 'pill']"));
-    private static final PageElement QUANTITY_FIELD = new PageElement("Quantity",
+    private static final PageElement quantityFld = new PageElement("Quantity Field",
             By.xpath("//div[@class = 'form-group required has-error test-inv-quantity']/input[contains(@id, 'ember')]"));
-    private static final PageElement PURCHASE_COST_FIELD = new PageElement("Purchase Cost",
+    private static final PageElement purchaseCostFld = new PageElement("Purchase Cost Field",
             By.xpath("//input[contains(@id, 'purchaseCost-ember')]"));
-    private static final PageElement VENDOR_FIELD = new PageElement("Vendor",
+    private static final PageElement vendorFld = new PageElement("Vendor Field",
             By.xpath("//input[contains(@id, 'vendor-ember')]"));
-    private static final PageElement ADD_BUTTON = new PageElement("Add",
+    private static final PageElement addBtn = new PageElement("Add Button",
             By.xpath("//button[contains(@class, 'btn btn-primary on')]"));
-    private static final PageElement ITEMS_DROP_DOWN = new PageElement("Items",
+    private static final PageElement itemsDpd = new PageElement("Items Drop Down",
             By.xpath("//div[@class='category-sub-items']//a[@href='#/inventory/listing']"));
 
 
@@ -42,55 +40,68 @@ public class NewItemPage extends BasePage{
 
     @Override
     public boolean pageIsDisplayed() {
-        return isElementPresent(H1);
+        return isElementPresent(h1);
     }
 
     public void fillNameField(String string){
-        enterText(NAME_FIELD, string);
+        waitToBeVisible(nameFld);
+        enterText(nameFld, string);
     }
 
     public void chooseType(String type){
-        click(TYPE_DROP_DOWN);
+        waitToBeVisible(typeDpd);
+        click(typeDpd);
+
         switch(type){
             case "Medication":
-                click(TYPE_MEDICATION);
+                waitToBeVisible(typeMedication);
+                click(typeMedication);
                 break;
         }
-        click(TYPE_DROP_DOWN);
+        click(typeDpd);
 
     }
     public void chooseDistributionUnit(String unit){
-        click(DISTRIBUTION_UNIT_DROP_DOWN);
+        waitToBeVisible(distributionUnitDpd);
+        click(distributionUnitDpd);
         switch (unit){
             case "pill":
-                click(PILL_DISTRIBUTION_UNIT);
+                waitToBeVisible(pillDistributionUnit);
+                click(pillDistributionUnit);
                 break;
         }
-        click(DISTRIBUTION_UNIT_DROP_DOWN);
+        click(distributionUnitDpd);
     }
     public void chooseUnit(String unit){
-        click(UNIT_DROP_DOWN);
+        waitToBeVisible(unitDpd);
+        click(unitDpd);
         switch (unit){
             case "pill":
-                click(PILL_UNIT);
+                waitToBeVisible(pillUnit);
+                click(pillUnit);
                 break;
         }
-        click(UNIT_DROP_DOWN);
+        click(unitDpd);
     }
     public void fillQuantityField(String quantity){
-        enterText(QUANTITY_FIELD, quantity);
+        waitToBeVisible(quantityFld);
+        enterText(quantityFld, quantity);
     }
     public void fillPurchaseCostField(String purchaseCost){
-        enterText(PURCHASE_COST_FIELD, purchaseCost);
+        waitToBeVisible(purchaseCostFld);
+        enterText(purchaseCostFld, purchaseCost);
     }
     public void fillVendorField(String vendor){
-        enterText(VENDOR_FIELD, vendor);
+        waitToBeVisible(vendorFld);
+        enterText(vendorFld, vendor);
     }
     public void clickAddButton(){
-        click(ADD_BUTTON);
+        waitToBeVisible(addBtn);
+        click(addBtn);
     }
     public void clickItemsDropDown(){
-        click(ITEMS_DROP_DOWN);
+        waitToBeVisible(itemsDpd);
+        click(itemsDpd);
     }
 
 

@@ -31,6 +31,8 @@ public class BaseTest {
     protected PopUpPages popUpPages;
     protected NewPatientPage newPatientPage;
     protected EditPatientPage editPatientPage;
+    protected NewInvoicePage newInvoicePage;
+    protected NewVisitPage newVisitPage;
 
     public static WebDriver driver;
     public WebDriverWait wait;
@@ -102,5 +104,7 @@ public class BaseTest {
         popUpPages = new PopUpPages(driver);
         newPatientPage = new NewPatientPage(driver);
         editPatientPage = new EditPatientPage(driver);
+        newInvoicePage = new NewInvoicePage(driver);
+        newVisitPage = new NewVisitPage(driver);
     }
 }

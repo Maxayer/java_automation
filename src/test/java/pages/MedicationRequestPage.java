@@ -3,15 +3,14 @@ package pages;
 import common.PageElement;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class MedicationRequestPage extends BasePage{
-    private static final String PAGE_URL = "";
-    private static final PageElement H1 = new PageElement("Medication Request",
+    private static final String pageUrl = "";
+    private static final PageElement h1 = new PageElement("Medication Request H1",
             By.xpath("//h1[text()=\"Medication Requests\"]"));
-    private static final PageElement MEGA_OCTICON = new PageElement("Mega Octicon",
+    private static final PageElement megaOcticonBtn = new PageElement("Mega Octicon Button",
             By.xpath("//span[@class='mega-octicon octicon-gear']"));
-    private static final PageElement LOG_OUT_BUTTON = new PageElement("Log OUT",
+    private static final PageElement logOutBtn = new PageElement("Log Out Button",
             By.xpath("//a[@class='logout']"));
 
     public MedicationRequestPage(WebDriver driver){
@@ -20,11 +19,13 @@ public class MedicationRequestPage extends BasePage{
 
     @Override
     public boolean pageIsDisplayed() {
-        return isElementPresent(H1);
+        return isElementPresent(h1);
     }
     public void logOut(){
-        click(MEGA_OCTICON);
-        click(LOG_OUT_BUTTON);
+        waitToBeVisible(megaOcticonBtn);
+        click(megaOcticonBtn);
+        waitToBeVisible(logOutBtn);
+        click(logOutBtn);
     }
 
 }

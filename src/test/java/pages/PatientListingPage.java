@@ -9,19 +9,21 @@ import java.util.List;
 
 public class PatientListingPage extends BasePage{
 
-    private static final String PAGE_URL = "http://demo.hospitalrun.io/#/patients";
-    private static final PageElement H1 = new PageElement("Patient Listing",
+    private static final String pageUrl = "http://demo.hospitalrun.io/#/patients";
+    private static final PageElement h1 = new PageElement("Patient Listing H1",
             By.xpath("//h1[text()=\"Patient Listing\"]"));
-    private static final PageElement MEGA_OCTICON = new PageElement("Mega Octicon",
+    private static final PageElement megaOcticonDpd = new PageElement("Mega Octicon Drop Down",
             By.xpath("//span[@class='mega-octicon octicon-gear']"));
-    private static final PageElement LOG_OUT_BUTTON = new PageElement("Log OUT",
+    private static final PageElement logOutBtn = new PageElement("Log Out Button",
             By.xpath("//a[@class='logout']"));
-    private static final PageElement INVENTORY_DROPDOWN = new PageElement("Inventory",
+    private static final PageElement inventoryDpd = new PageElement("Inventory Drop Down",
             By.cssSelector("#ember716"));
-    private static final PageElement NEW_PATIENT_BUTTON = new PageElement("+new patient",
+    private static final PageElement newPatientBtn = new PageElement("New Patient Button",
             By.cssSelector("button[class='btn btn-primary']"), true);
-    private static final PageElement NEXT_PAGE_BUTTON =new PageElement("Chevron right",
+    private static final PageElement nextPageBtn = new PageElement("Next Page Button",
             By.xpath("//span[@class= 'glyphicon glyphicon-chevron-right']/parent::button"), true);
+    private static final PageElement billingDpd = new PageElement("Billing Drop Down",
+            By.xpath("//a[text()='Billing']"), true);
 
     public PatientListingPage(WebDriver driver){
         super(driver);
@@ -29,27 +31,36 @@ public class PatientListingPage extends BasePage{
 
     @Override
     public boolean pageIsDisplayed() {
-        return isElementPresent(H1);
+        return isElementPresent(h1);
     }
 
     public void logOut(){
-        click(MEGA_OCTICON);
-        click(LOG_OUT_BUTTON);
+        waitToBeVisible(megaOcticonDpd);
+        click(megaOcticonDpd);
+        waitToBeVisible(logOutBtn);
+        click(logOutBtn);
     }
     public void clickInventoryDropDown(){
-        click(INVENTORY_DROPDOWN);
+        waitToBeVisible(inventoryDpd);
+        click(inventoryDpd);
+    }
+    public void clickBillingDropDown(){
+        waitToBeVisible(billingDpd);
+        click(billingDpd);
     }
 
     public void clickNewPatientButton(){
-        click(NEW_PATIENT_BUTTON);
+        waitToBeVisible(newPatientBtn);
+        click(newPatientBtn);
     }
 
     public void clickNextPageButton(){
-        click(NEXT_PAGE_BUTTON);
+        waitToBeVisible(nextPageBtn);
+        click(nextPageBtn);
     }
 
     public void goToEndOfPatientsList(){
-        while(!("true".equals(getAttribute(NEXT_PAGE_BUTTON, "disabled")))){
+        while(!("true".equals(getAttribute(nextPageBtn, "disabled")))){
             try{
                 Thread.sleep(1000);
             }catch (InterruptedException e){

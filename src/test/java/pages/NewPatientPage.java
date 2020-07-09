@@ -5,15 +5,15 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 public class NewPatientPage extends BasePage{
-    private static final PageElement H1 = new PageElement("New Patient",
+    private static final PageElement h1 = new PageElement("New Patient H1",
             By.xpath("//h1[text()='New Patient']"), true);
-    private static final PageElement FIRST_NAME_FIELD = new PageElement("First Name",
+    private static final PageElement firstNameFld = new PageElement("First Name Field",
             By.xpath("//label[text()= 'First Name']/following-sibling::div/input"), true);
-    private static final PageElement LAST_NAME_FIELD = new PageElement("Last Name",
+    private static final PageElement lastNameFld = new PageElement("Last Name Field",
             By.xpath("//label[text()= 'Last Name']/following-sibling::div/input"), true);
-    private static final PageElement ADD_BUTTON = new PageElement("Add",
+    private static final PageElement addBtn = new PageElement("Add Button",
             By.xpath("//button[text()='Add']"), true);
-    private static final PageElement PATIENTS_DROP_DOWN = new PageElement("Patients",
+    private static final PageElement patientsDpd = new PageElement("Patients Drop Down",
             By.xpath("//a[text()='Patients']"), true);
 
     public NewPatientPage(WebDriver driver){
@@ -26,19 +26,23 @@ public class NewPatientPage extends BasePage{
     }
 
     public void fillFirstNameField(String firstName){
-        enterText(FIRST_NAME_FIELD, firstName);
+        waitToBeVisible(firstNameFld);
+        enterText(firstNameFld, firstName);
     }
 
     public void fillLastNameField(String lastName){
-        enterText(LAST_NAME_FIELD, lastName);
+        waitToBeVisible(lastNameFld);
+        enterText(lastNameFld, lastName);
     }
 
     public void clickAddButton(){
-        click(ADD_BUTTON);
+        waitToBeVisible(addBtn);
+        click(addBtn);
     }
 
     public void clickPatientsDropDown(){
-        click(PATIENTS_DROP_DOWN);
+        waitToBeVisible(patientsDpd);
+        click(patientsDpd);
     }
 
 }

@@ -6,17 +6,19 @@ import org.openqa.selenium.WebDriver;
 
 public class LoginPage extends BasePage{
 
-    private static final String PAGE_URL = "http://demo.hospitalrun.io/#/login";
+    private static final String pageUrl = "http://demo.hospitalrun.io/#/login";
 
-    private static final PageElement USERNAME_FIELD = new PageElement("Username field",
-            By.xpath("//input[@id='identification']"), true);
-    private static final PageElement PASSWORD_FIELD = new PageElement("Password field",
-            By.xpath("//input[@id='password']"));
-    private static final PageElement SIGN_IN_BUTTON = new PageElement("Sign in button",
+
+    private static final PageElement userNameFld = new PageElement("Username Field",
+            By.id("identification"), true);
+
+    private static final PageElement passwordFld = new PageElement("Password Field",
+            By.id("password"), true);
+    private static final PageElement signInBtn = new PageElement("Sign In Button",
             By.xpath("//button[@class='btn btn-lg btn-primary btn-block']"));
-    private static final PageElement WARNING_OF_INCORRECT_LOGIN_OR_PASSWORD = new PageElement("Warning of incorrect login or password",
+    private static final PageElement warningOfIncorrectLoginOrPassword = new PageElement("Warning Of Incorrect Login Or Password",
             By.xpath("//div[text()=\"Username or password is incorrect.\"]"));
-    private static final PageElement SIGN_IN_DESCRIPTION = new PageElement("PLEASE SIGN IN",
+    private static final PageElement signInDescription = new PageElement("Please Sign In Description",
             By.xpath("//h2[@class='form-signin-heading']"));
 
     public LoginPage(WebDriver driver){
@@ -25,30 +27,29 @@ public class LoginPage extends BasePage{
 
     @Override
     public boolean pageIsDisplayed() {
-        return isElementPresent(SIGN_IN_DESCRIPTION);
+        return isElementPresent(signInDescription);
     }
 
     public void open(){
-        driver.get(PAGE_URL);
+        driver.get(pageUrl);
     }
 
     public void fillUserNameField(String login){
-        enterText(USERNAME_FIELD, login);
+        waitToBeVisible(userNameFld);
+        enterText(userNameFld, login);
     }
 
     public void fillPasswordField(String password){
-        enterText(PASSWORD_FIELD, password);
+        waitToBeVisible(passwordFld);
+        enterText(passwordFld, password);
     }
 
-    public PatientListingPage clickSignInButton(){
-        click(SIGN_IN_BUTTON);
-        return new PatientListingPage(driver);
+    public void clickSignInButton(){
+        waitToBeVisible(signInBtn);
+        click(signInBtn);
     }
     public boolean isWarningOfIncorrectLoginOrPasswordPresent(){
-        return isElementPresent(WARNING_OF_INCORRECT_LOGIN_OR_PASSWORD);
-    }
-    public boolean atPage(){
-        return driver.getCurrentUrl().equalsIgnoreCase(PAGE_URL);
+        return isElementPresent(warningOfIncorrectLoginOrPassword);
     }
 
 
