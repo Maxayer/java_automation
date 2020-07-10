@@ -33,6 +33,9 @@ public class BaseTest {
     protected EditPatientPage editPatientPage;
     protected NewInvoicePage newInvoicePage;
     protected NewVisitPage newVisitPage;
+    protected DeleteInvoicePage deleteInvoicePage;
+    protected DeleteItemPage deleteItemPage;
+    protected DeletePatientPage deletePatientPage;
 
     public static WebDriver driver;
     public WebDriverWait wait;
@@ -106,5 +109,8 @@ public class BaseTest {
         editPatientPage = new EditPatientPage(driver);
         newInvoicePage = new NewInvoicePage(driver);
         newVisitPage = new NewVisitPage(driver);
+        deleteInvoicePage = new DeleteInvoicePage(driver);
+        deleteItemPage = new DeleteItemPage(driver);
+        deletePatientPage = new DeletePatientPage(driver);
     }
 }

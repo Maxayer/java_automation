@@ -8,7 +8,11 @@ import pages.LoginPage;
 import tests.BaseTest;
 import common.Config;
 
+import java.util.List;
+
 public class TestLoginTests extends BaseTest {
+
+
 
     @DataProvider(name = "loginRightDataProviderForHealthWorkers")
     public Object[][] getHealthWorkersCredentials(){
@@ -78,7 +82,7 @@ public class TestLoginTests extends BaseTest {
         Assert.assertTrue(testLoginPage.isWarningOfIncorrectLoginOrPasswordPresent());
     }
     @Test
-    public void addNewMedicineItemAsDoctor(){
+    public void addNewMedicineItemAsDoctor() throws InterruptedException {
 
         loginPage.open();
         loginPage.fillUserNameField(Config.DOCTOR_NAME);
@@ -107,6 +111,8 @@ public class TestLoginTests extends BaseTest {
 
         newItemPage.clickItemsDropDown();
         Assert.assertTrue(itemsPage.pageIsDisplayed());
+        itemsPage.refreshPage();
+
         Assert.assertTrue(itemsPage.getCommodityName(0).equals("AAAA"));
     }
 
@@ -160,39 +166,105 @@ public class TestLoginTests extends BaseTest {
     // is to be done
     @Test
     public void addNewInvoiceAsDoctor() throws InterruptedException {
+        String fullName = "Carl Jacob Bread";
+
         loginPage.open();
         loginPage.fillUserNameField(Config.DOCTOR_NAME);
         loginPage.fillPasswordField(Config.DOCTOR_PASS);
         loginPage.clickSignInButton();
-        Assert.assertTrue(patientListingPage.pageIsDisplayed());
 
+        Assert.assertTrue(patientListingPage.pageIsDisplayed());
         patientListingPage.clickBillingDropDown();
+
         Assert.assertTrue(billedInvoicesPage.pageIsDisplayed());
         billedInvoicesPage.clickNewInvoices();
 
         Assert.assertTrue(newInvoicePage.pageIsDisplayed());
-
-        newInvoicePage.fillPatientFld("Carl Jacob Bread");
-        newInvoicePage.chooseVisit();
-
-        Thread.sleep(3000);
-
-        newInvoicePage.chooseVisit();
-
-        Thread.sleep(3000);
-
-        newInvoicePage.chooseVisit();
-
-        newInvoicePage.clickVisit();
-
+        newInvoicePage.fillPatientFld(fullName);
+        newInvoicePage.selectFromVisitDpd();
         newInvoicePage.clickInvoiceReadyBtn();
         newInvoicePage.clickBillingDpd();
 
         Assert.assertTrue(billedInvoicesPage.pageIsDisplayed());
         billedInvoicesPage.refreshPage();
-
+        List<String> names = billedInvoicesPage.getNamesOfPatientsOnPage();
+        Assert.assertTrue(names.stream().anyMatch((name) -> name.startsWith(fullName)));
 
     }
 
+    @Test
+    public void deleteInvoiceAsDoctor() throws InterruptedException{
+        String fullName = "Carl Jacob Bread";
+
+        loginPage.open();
+        loginPage.fillUserNameField(Config.DOCTOR_NAME);
+        loginPage.fillPasswordField(Config.DOCTOR_PASS);
+        loginPage.clickSignInButton();
+
+        Assert.assertTrue(patientListingPage.pageIsDisplayed());
+        patientListingPage.clickBillingDropDown();
+        Assert.assertTrue(billedInvoicesPage.pageIsDisplayed());
+        billedInvoicesPage.deleteInvoiceByPatientName(fullName);
+
+        Assert.assertTrue(deleteInvoicePage.pageIsDisplayed());
+        deleteInvoicePage.clickDeleteBtn();
+
+        Assert.assertTrue(billedInvoicesPage.pageIsDisplayed());
+
+        billedInvoicesPage.refreshPage();
+        List<String> names = billedInvoicesPage.getNamesOfPatientsOnPage();
+        Assert.assertTrue(! names.stream().anyMatch((name) -> name.startsWith(fullName)));
+
+    }
+
+    @Test
+    public void deleteMedicineItemAsDoctor() throws InterruptedException{
+        loginPage.open();
+        loginPage.fillUserNameField(Config.DOCTOR_NAME);
+        loginPage.fillPasswordField(Config.DOCTOR_PASS);
+        loginPage.clickSignInButton();
+
+        Assert.assertTrue(patientListingPage.pageIsDisplayed());
+        patientListingPage.clickInventoryDropDown();
+
+        Assert.assertTrue(inventoryPage.pageIsDisplayed());
+        inventoryPage.clickItemButton();
+
+        Assert.assertTrue(itemsPage.pageIsDisplayed());
+        Assert.assertTrue(itemsPage.getNamesOfItemsOnPage().stream().anyMatch((name) -> name.equals("AAAA")));
+        itemsPage.deleteItem("AAAA");
+
+        Assert.assertTrue(deleteItemPage.pageIsDisplayed());
+        deleteItemPage.clickOkBtn();
+
+        Assert.assertTrue(itemsPage.pageIsDisplayed());
+        itemsPage.refreshPage();
+        Assert.assertTrue(!itemsPage.getNamesOfItemsOnPage().stream().anyMatch((name) -> name.equals("AAAA")));
+
+    }
+
+    @Test
+    public void deletePatientAsDoctor() throws InterruptedException{
+        loginPage.open();
+        loginPage.fillUserNameField(Config.DOCTOR_NAME);
+        loginPage.fillPasswordField(Config.DOCTOR_PASS);
+        loginPage.clickSignInButton();
+
+        Assert.assertTrue(patientListingPage.pageIsDisplayed());
+        patientListingPage.goToEndOfPatientsList();
+
+        String[] fullName = patientListingPage.getFullNameOfLastPatient();
+        Assert.assertTrue(fullName[0].equals("Carl") && fullName[1].equals("Bread"));
+
+        patientListingPage.deleteLastPatient();
+
+        Assert.assertTrue(deletePatientPage.pageIsDisplayed());
+        deletePatientPage.clickDeleteButton();
+
+        Assert.assertTrue(patientListingPage.pageIsDisplayed());
+        fullName = patientListingPage.getFullNameOfLastPatient();
+        Assert.assertTrue(! (fullName[0].equals("Carl") && fullName[1].equals("Bread")));
+
+    }
 
 }

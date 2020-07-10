@@ -100,7 +100,7 @@ public class NewItemPage extends BasePage{
         click(addBtn);
     }
     public void clickItemsDropDown(){
-        waitToBeVisible(itemsDpd);
+        waitToBeClickable(itemsDpd);
         click(itemsDpd);
     }
 

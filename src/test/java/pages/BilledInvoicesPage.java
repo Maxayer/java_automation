@@ -3,6 +3,10 @@ package pages;
 import common.PageElement;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class BilledInvoicesPage extends BasePage{
 
@@ -15,6 +19,10 @@ public class BilledInvoicesPage extends BasePage{
             By.xpath("//a[@class='logout']"));
     private static final PageElement newInvoicesBtn = new PageElement("New Invoices Button",
             By.xpath("//button[text()='+ new invoice']"), true);
+    private static final PageElement namesOfPatients = new PageElement("A List of patients names in the Invoices",
+            By.xpath("//tr/td[4]"));
+    private static final PageElement invoices = new PageElement("Invoices on the page",
+            By.xpath("//tr"));
 
     public BilledInvoicesPage(WebDriver driver){
         super(driver);
@@ -35,5 +43,23 @@ public class BilledInvoicesPage extends BasePage{
     public void clickNewInvoices(){
         waitToBeVisible(newInvoicesBtn);
         click(newInvoicesBtn);
+    }
+
+    public List<String> getNamesOfPatientsOnPage(){
+        List<WebElement> patients = findAll(namesOfPatients);
+        return patients.stream().map((patient) -> patient.getText()).collect(Collectors.toList());
+
+    }
+
+    public void deleteInvoiceByPatientName(String fullName){
+        List<WebElement> inv = findAll(invoices);
+        inv = inv.subList(1, inv.size());
+
+        for(WebElement invoice: inv){
+            if(invoice.findElement(By.xpath("./td[4]")).getText().startsWith(fullName)){
+                invoice.findElement(By.xpath(".//button[text()='Delete']")).click();
+                break;
+            }
+        }
     }
 }

@@ -88,12 +88,14 @@ public class PatientListingPage extends BasePage{
     }
 
     public String[] getFullNameOfLastPatient(){
-        List<WebElement> patients = getListOfPatientsOnCurrentPage();
-        int index = patients.size() - 1;
         WebElement patient = getLastPatient();
         String firstName = patient.findElement(By.xpath("./td[2]")).getText();
         String latsName = patient.findElement(By.xpath("./td[3]")).getText();
 
         return new String [] {firstName, latsName};
+    }
+    public void deleteLastPatient(){
+        WebElement lastPatient = getLastPatient();
+        lastPatient.findElement(By.xpath("./td[7]/button[text()='Delete']")).click();
     }
 }

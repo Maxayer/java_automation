@@ -6,6 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ItemsPage extends BasePage{
 
@@ -29,12 +30,31 @@ public class ItemsPage extends BasePage{
         click(newItemBtn);
     }
 
-    public List<WebElement> getListOfItems(){
-        return findAll(By.xpath("//tr")).subList(1, 26);
+    public List<WebElement> getListOfItems()  {
+
+        List<WebElement> items = findAll(By.xpath("//tr"));
+        items = items.subList(1, items.size());
+        return items;
     }
 
     public String getCommodityName(int index){
         return getListOfItems().get(index).findElements(By.xpath("./td")).get(1).getText();
+    }
+
+    public List<String> getNamesOfItemsOnPage(){
+        return findAll(By.xpath("//tr/td[2]")).stream().map((name) -> name.getText()).collect(Collectors.toList());
+    }
+
+    public void deleteItem(String name) throws InterruptedException {
+        List<WebElement> items = findAll(By.xpath("//tr"));
+        items = items.subList(1, items.size());
+
+        for(WebElement item: items){
+            if(item.findElement(By.xpath("./td[2]")).getText().startsWith(name)){
+                item.findElement(By.xpath(".//button[text()='Delete']")).click();
+                break;
+            }
+        }
     }
 
 
