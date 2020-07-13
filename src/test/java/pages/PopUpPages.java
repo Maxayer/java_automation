@@ -18,7 +18,7 @@ public class PopUpPages extends BasePage{
     }
 
     public void clickOkButton(){
-        waitToBeVisible(okBtn);
+        waitToBeClickable(okBtn);
         click(okBtn);
     }
 

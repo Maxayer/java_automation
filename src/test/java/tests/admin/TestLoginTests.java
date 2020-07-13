@@ -73,15 +73,14 @@ public class TestLoginTests extends BaseTest {
 
     @Test(dataProvider = "loginFalseDataProvider")
     public void logInWithWrongCredentials(String login, String password){
-        LoginPage testLoginPage = new LoginPage(driver);
-        testLoginPage.open();
-        testLoginPage.fillUserNameField(login);
-        testLoginPage.fillPasswordField(password);
-        testLoginPage.clickSignInButton();
-        Assert.assertTrue(testLoginPage.pageIsDisplayed());
-        Assert.assertTrue(testLoginPage.isWarningOfIncorrectLoginOrPasswordPresent());
+        loginPage.open();
+        loginPage.fillUserNameField(login);
+        loginPage.fillPasswordField(password);
+        loginPage.clickSignInButton();
+        Assert.assertTrue(loginPage.pageIsDisplayed());
+        Assert.assertTrue(loginPage.isWarningOfIncorrectLoginOrPasswordPresent());
     }
-    @Test
+    @Test(priority = 2)
     public void addNewMedicineItemAsDoctor() throws InterruptedException {
 
         loginPage.open();
@@ -116,7 +115,7 @@ public class TestLoginTests extends BaseTest {
         Assert.assertTrue(itemsPage.getCommodityName(0).equals("AAAA"));
     }
 
-    @Test
+    @Test(priority= 1)
     public void addNewPatientAsDoctor(){
         loginPage.open();
         loginPage.fillUserNameField(Config.DOCTOR_NAME);
@@ -164,7 +163,7 @@ public class TestLoginTests extends BaseTest {
     }
 
     // is to be done
-    @Test
+    @Test(priority = 3, dependsOnMethods = "addNewPatientAsDoctor")
     public void addNewInvoiceAsDoctor() throws InterruptedException {
         String fullName = "Carl Jacob Bread";
 
@@ -192,7 +191,7 @@ public class TestLoginTests extends BaseTest {
 
     }
 
-    @Test
+    @Test(priority = 4, dependsOnMethods = "addNewInvoiceAsDoctor")
     public void deleteInvoiceAsDoctor() throws InterruptedException{
         String fullName = "Carl Jacob Bread";
 
@@ -217,7 +216,7 @@ public class TestLoginTests extends BaseTest {
 
     }
 
-    @Test
+    @Test(priority = 5, dependsOnMethods = "addNewMedicineItemAsDoctor")
     public void deleteMedicineItemAsDoctor() throws InterruptedException{
         loginPage.open();
         loginPage.fillUserNameField(Config.DOCTOR_NAME);
@@ -243,7 +242,7 @@ public class TestLoginTests extends BaseTest {
 
     }
 
-    @Test
+    @Test(priority = 6, dependsOnMethods = "addNewPatientAsDoctor")
     public void deletePatientAsDoctor() throws InterruptedException{
         loginPage.open();
         loginPage.fillUserNameField(Config.DOCTOR_NAME);
@@ -262,6 +261,7 @@ public class TestLoginTests extends BaseTest {
         deletePatientPage.clickDeleteButton();
 
         Assert.assertTrue(patientListingPage.pageIsDisplayed());
+        patientListingPage.refreshPage();
         fullName = patientListingPage.getFullNameOfLastPatient();
         Assert.assertTrue(! (fullName[0].equals("Carl") && fullName[1].equals("Bread")));
 
