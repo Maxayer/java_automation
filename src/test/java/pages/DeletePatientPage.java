@@ -6,7 +6,7 @@ import org.openqa.selenium.WebDriver;
 
 public class DeletePatientPage extends BasePage {
     private static final PageElement deleteBtn = new PageElement("Delete Button",
-            By.xpath("//div[@class='modal-footer']/button[text()='Delete']"), true);
+            By.cssSelector("div.modal-footer>button:nth-child(2)"), true);
 
     public DeletePatientPage(WebDriver driver){
         super(driver);
@@ -17,9 +17,10 @@ public class DeletePatientPage extends BasePage {
         return allRequiredElementDisplayed();
     }
 
-    public void clickDeleteButton(){
+    public void clickDeleteButton() throws InterruptedException {
         waitToBeClickable(deleteBtn);
         click(deleteBtn);
+        Thread.sleep(2000);
     }
 
 }

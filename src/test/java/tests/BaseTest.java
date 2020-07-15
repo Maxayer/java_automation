@@ -67,7 +67,7 @@ public class BaseTest {
 
 
 
-    @AfterMethod(enabled = false)
+    @AfterMethod()
     public void turnDown() {
 
         try{
